@@ -1,0 +1,20 @@
+// 将设置放入此文件中以覆盖默认设置
+{
+  "editor.tabSize": 2,
+  "editor.fontSize": 17,
+  "editor.fontFamily": "Consolas",
+  "editor.fontWeight": "bold",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontFamily": "Consolas",
+  "git.confirmSync": false,
+  "workbench.colorTheme": "Visual Studio Dark",
+  // "http.proxy": "http://10.65.103.75:9009",
+  "go.gopath": "e:/gopath",
+  "git.enableSmartCommit": true,
+  "extensions.ignoreRecommendations": false,
+  "python.formatting.autopep8Path": "C:\\Program Files\\Python36\\Scripts\\autopep8.exe",
+  "php.executablePath": "C:\\Users\\zhangxu\\Downloads\\php-7.0.26-nts-Win32-VC14-x64\\php.exe",
+  "php.validate.executablePath": "C:\\Users\\zhangxu\\Downloads\\php-7.0.26-nts-Win32-VC14-x64\\php.exe",
+  "window.zoomLevel": 0,
+  "http.proxy": "http://127.0.0.01:1080"
+}
