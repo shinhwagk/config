@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 BASE=$(dirname $0);
-DOWNS=$($BASE/../youtube-dl.downloads);
+DOWNS="$BASE/../youtube-dl.downloads";
 
 download() {
   if [ $# == 1 ]; then
