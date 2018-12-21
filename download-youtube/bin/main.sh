@@ -5,9 +5,9 @@ DOWNS="$BASE/../youtube-dl.downloads";
 
 download() {
   if [ $# == 1 ]; then
-    youtube-dl $1 &>/dev/null &
-  else 
-    youtube-dl $1 $2 &>/dev/null &
+    youtube-dl --proxy socks5://127.0.0.1:1080 $1 &>/dev/null &
+  else
+    youtube-dl --proxy socks5://127.0.0.1:1080 $1 $2 &>/dev/null &
   fi
 }
 
@@ -20,10 +20,10 @@ batchDownload() {
   do
     p1=`echo $line | awk '{print $1}'`
     p2=`echo $line | awk '{print $2}'`
-    download $p1 $p2
+    if [ `checkDownloading $p1` == 0 ]; then
+      download $p1 $p2
+    fi
   done
 }
 
-main() {
-  batchDownload
-}
+batchDownload
