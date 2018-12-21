@@ -15,7 +15,7 @@ checkDownloading() {
   ps -ef | grep $1 | grep -v grep | wc -l
 }
 
-batchDownload() {
+main() {
   cat $DOWNS | while read line
   do
     p1=`echo $line | awk '{print $1}'`
@@ -26,4 +26,4 @@ batchDownload() {
   done
 }
 
-batchDownload
+main
