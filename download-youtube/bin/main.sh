@@ -1,27 +1,39 @@
 #!/usr/bin/env bash
 
 BASE=$(dirname $0);
-DOWNS="$BASE/../youtube-dl.downloads";
+DOWNS="$BASE/../downloads";
 
-download() {
-  if [ $# == 1 ]; then
-    youtube-dl --proxy socks5://127.0.0.1:1080 $1 &>/dev/null &
+removeSuccess() {
+  sudo docker ps -a --format '{{.Names}}' --filter ancestor='gk/youtube-dl' --filter 'exited=0' | while read line; do
+    echo "$line download success."
+    echo $line >> success;
+    sudo docker rm $line;
+  done
+  cat success | while read line; do
+    sed -i "/${line}/d" $DOWNS;
+  done
+}
+
+beenDowndOrDowning() {
+  local di=`sudo docker ps -a --format '{{.Names}}' --filter ancestor='gk/youtube-dl' --filter name=$1`
+  local bd=`cat success | grep -v grep | grep $1 1>/dev/null && echo 1 || echo 0`
+  if [ -z "$di" -a "$bd" == "0" ]; then
+    echo 2 # no down.
   else
-    youtube-dl --proxy socks5://127.0.0.1:1080 $1 $2 &>/dev/null &
+    echo 0 # down.
   fi
 }
 
-checkDownloading() {
-  ps -ef | grep $1 | grep -v grep | wc -l
-}
-
 main() {
-  cat $DOWNS | while read line
-  do
+  removeSuccess;
+  cat $DOWNS | while read line; do
     p1=`echo $line | awk '{print $1}'`
     p2=`echo $line | awk '{print $2}'`
-    if [ `checkDownloading $p1` == 0 ]; then
-      download $p1 $p2
+    if [ $(beenDowndOrDowning $p1) == 2 ]; then
+      echo "sudo docker run --name=${p1} --network=host -v `pwd`/$BASE/../movies:/youtube-dl -d gk/youtube-dl $p1 $p2"
+      sudo docker run --name=${p1} --network=host -v `pwd`/$BASE/../youtube:/youtube-dl -d gk/youtube-dl $p1 $p2
+    else
+      echo "$p1 downing."
     fi
   done
 }
