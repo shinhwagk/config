@@ -44,6 +44,7 @@ appendDownloads() {
 
 main() {
   removeSuccess;
+  sudo docker start $(docker ps -aq  --filter ancestor='gk/youtube-dl' --filter 'exited=1')
   appendDownloads $1
 }
 
