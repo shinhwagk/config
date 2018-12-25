@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
-maxFormatCode() {
-  youtube-dl --proxy socks5://127.0.0.1:1080 -F https://www.youtube.com/watch?v=${1} | grep '^[0-9]' | sort -n -k 1 -r | head -1 | awk '{print $1}'
-}
-
 download() {
   local fcode=$2
   if [ $# == 1 ]; then
-    fcode=$(maxFormatCode $1)
+    fcode="bestvideo"
   fi
-  echo "youtube-dl -f $fcode --proxy socks5://127.0.0.1:1080 https://www.youtube.com/watch?v=$"
+  echo "youtube-dl -f $fcode --proxy socks5://127.0.0.1:1080 https://www.youtube.com/watch?v=$1"
   youtube-dl -f $fcode --proxy socks5://127.0.0.1:1080 https://www.youtube.com/watch?v=$1
 }
 
